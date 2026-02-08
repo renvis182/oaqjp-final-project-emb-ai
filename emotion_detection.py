@@ -14,17 +14,32 @@ def emotion_detector(text_to_analyze):
     # Sending a POST request to the sentiment analysis API
     response = requests.post(url, json=myobj, headers=header)
 
-    return response.text  # Return the response text from the API
+    #return response.text  # Return the response text from the API
 
     # Parsing the JSON response from the API
-    #formatted_response = json.loads(response.text)
-    #return formatted_response
+    formatted_response = json.loads(response.text)
 
     # Extracting sentiment label and score from the response
-    #label = formatted_response['documentSentiment']['label']
-    #score = formatted_response['documentSentiment']['score']
+    anger_score = formatted_response["emotionPredictions"][0]["emotion"]["anger"]
+    disgust_score = formatted_response["emotionPredictions"][0]["emotion"]["disgust"]
+    fear_score = formatted_response["emotionPredictions"][0]["emotion"]["fear"]
+    joy_score = formatted_response["emotionPredictions"][0]["emotion"]["joy"]
+    sadness_score = formatted_response["emotionPredictions"][0]["emotion"]["sadness"]
+    
+    # Creating a dictionary with key values of all the emotions
+    emotions = {
+                'anger': anger_score,
+                'disgust': disgust_score,
+                'fear': fear_score,
+                'joy': joy_score,
+                'sadness': sadness_score,
+                }
 
-    # Returning a dictionary containing sentiment analysis results
-    #return {'label': label, 'score': score}
+    # Calculate the dominant emotion 
+    dominant_emotion = max(emotions, key=emotions.get)
 
-  
+    #Adding the dominant emotion to the dict emotions
+    emotions["dominant_emotion"] = dominant_emotion
+
+    # Returning a dictionary containing emotions' analysis results
+    return emotions
