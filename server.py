@@ -34,11 +34,13 @@ def sent_analyzer():
     # Check if the dominant emotion is None, indicating an error or invalid input
     if dominant_emotion is None:
         return "Invalid text! Please try again."
-    
-    else:
-        # Return a formatted string with the emotion scores and dominant emotion
-        return "For the given statement, the system response is 'anger': {}, 'disgust': {}, 'fear': {}, 'joy': {} and 'sadness': {}. The dominant emotion is {}.".format(anger, disgust, fear, joy, sadness, dominant_emotion)
-
+    # Return a formatted string with the emotion scores and dominant emotion
+    return (
+            "For the given statement, the system response is "
+            f"'anger': {anger}, 'disgust': {disgust}, 'fear': {fear}, "
+            f"'joy': {joy} and 'sadness': {sadness}. "
+            f"The dominant emotion is {dominant_emotion}."
+            )
 @app.route("/")
 def render_index_page():
     ''' This function initiates the rendering of the main application
@@ -47,6 +49,5 @@ def render_index_page():
     return render_template('index.html')
 
 if __name__ == "__main__":
-    ''' This functions executes the flask app and deploys it on localhost:5000
-    '''
+
     app.run(host="0.0.0.0", port=5000)
