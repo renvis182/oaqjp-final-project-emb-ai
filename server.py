@@ -1,4 +1,4 @@
-''' Executing this function initiates the application of sentiment
+''' Executing this function initiates the application of emotion
     analysis to be executed over the Flask channel and deployed on
     localhost:5000.
 '''
@@ -30,9 +30,14 @@ def sent_analyzer():
     joy = response['joy']
     sadness = response['sadness']
     dominant_emotion = response['dominant_emotion']
+
+    # Check if the dominant emotion is None, indicating an error or invalid input
+    if dominant_emotion is None:
+        return "Invalid text! Please try again."
     
-    # Return a formatted string with the emotion scores and dominant emotion
-    return "For the given statement, the system response is 'anger': {}, 'disgust': {}, 'fear': {}, 'joy': {} and 'sadness': {}. The dominant emotion is {}.".format(anger, disgust, fear, joy, sadness, dominant_emotion)
+    else:
+        # Return a formatted string with the emotion scores and dominant emotion
+        return "For the given statement, the system response is 'anger': {}, 'disgust': {}, 'fear': {}, 'joy': {} and 'sadness': {}. The dominant emotion is {}.".format(anger, disgust, fear, joy, sadness, dominant_emotion)
 
 @app.route("/")
 def render_index_page():
